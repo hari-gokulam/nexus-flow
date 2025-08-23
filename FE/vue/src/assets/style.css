@@ -1,0 +1,28 @@
+body {
+    background-color: lightslategray;
+}
+
+.top-bar {
+    background-color: #fff;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.top-bar-left {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.top-bar-right {
+    display: flex;
+    align-items: center;
+}
+
+.top-bar-right-item {
+    margin-left: 20px;
+    font-size: 20px;
+    color: #333;
+}
