@@ -1,0 +1,4 @@
+{
+    "vue.format.script.initialIndent": true,
+    "vue.format.style.initialIndent": true
+}
