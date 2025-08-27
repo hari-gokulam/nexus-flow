@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <title>Designer</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon"/>
+    <style>
+        :root {
+            /* Custom colors to match the original design */
+            --pico-font-family: 'Inter', 'Noto Sans', sans-serif;
+            --pico-primary: #3d99f5;
+            --pico-background-color: #f8fafc;
+            --pico-color: #64748b;
+            --pico-color-h1: #1e293b;
+            --pico-border-color: #e2e8f0;
+            --pico-code-background-color: #f1f5f9;
+        }
+
+        body {
+            background-color: var(--pico-background-color);
+        }
+
+        header {
+            background-color: white;
+            border-bottom: 1px solid var(--pico-border-color);
+        }
+
+        header .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        header .logo svg {
+            color: var(--pico-primary);
+        }
+
+        header .logo h2 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: var(--pico-color-h1);
+        }
+
+        nav a {
+            font-size: 0.875rem;
+        }
+
+        main {
+            display: flex;
+            flex: 1;
+        }
+
+        aside {
+            width: 20rem; /* Equivalent to w-80 */
+            border-right: 1px solid var(--pico-border-color);
+            padding: 1.5rem;
+            background-color: var(--pico-background-color);
+        }
+        
+        .workflow-elements article {
+            background-color: white;
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid transparent;
+            cursor: grab;
+        }
+        
+        .workflow-elements article:hover {
+            border-color: var(--pico-primary);
+        }
+
+        .workflow-elements article .icon-box {
+            background-color: var(--pico-code-background-color);
+            padding: 0.5rem;
+            border-radius: var(--pico-border-radius);
+            box-shadow: var(--pico-box-shadow);
+            color: var(--pico-color);
+        }
+
+        .dropzone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--pico-border-color);
+            background-color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .dropzone h3 {
+            color: var(--pico-color-h1);
+        }
+    </style>
+</head>
+<body>
+    <header class="container-fluid">
+        <nav>
+            <ul>
+                <li>
+                    <div class="logo">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+                        </svg>
+                        <h2>FlowForge</h2>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Workflows</a></li>
+                <li><a href="#">Instances</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+            <ul>
+                <li>
+                    <a href="#">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLBDxTZnKBW05hRxfXNAKL1CN8hkqErjkIGxkZcOTrm0n6_a_ZKKFAPnvnXnyhCU1WHK6q311Kvy1jL-V04pXai2gVdvky5lKGQWO64CGul0NkERhqzbIPl2P2ydfl-E5a4LPf1v0vER-g87AKsiZwcT6uCNagf4m5rBPaiwKFKxR6FMO9rd32Er7nrwFup7YYpVx0XF5sQ9ttHc48r4hSbgiAeXAAQJdm0TxUcZLqiGo5oN77ftFo505zJR5bfp8q79B3Qf7wQso" alt="User avatar" class="circle" style="width: 2.5rem; height: 2.5rem;">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <aside>
+            <h3>Workflow Elements</h3>
+            <div class="workflow-elements">
+                <article>
+                    <div class="icon-box">
+                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Z"></path>
+                        </svg>
+                    </div>
+                    <p>Task</p>
+                </article>
+                <article>
+                    <div class="icon-box">
+                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+                        </svg>
+                    </div>
+                    <p>Transition</p>
+                </article>
+                <article>
+                    <div class="icon-box">
+                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+                        </svg>
+                    </div>
+                    <p>Condition</p>
+                </article>
+                <article>
+                    <div class="icon-box">
+                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"></path>
+                        </svg>
+                    </div>
+                    <p>Start</p>
+                </article>
+                <article>
+                    <div class="icon-box">
+                        <svg fill="currentColor" height="24px" viewBox="0 0 256 256" width="24px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M200.73,40H55.27A15.29,15.29,0,0,0,40,55.27V200.73A15.29,15.29,0,0,0,55.27,216H200.73A15.29,15.29,0,0,0,216,200.73V55.27A15.29,15.29,0,0,0,200.73,40ZM200,200H56V56H200Z"></path>
+                        </svg>
+                    </div>
+                    <p>End</p>
+                </article>
+            </div>
+        </aside>
+        
+        <div class="container-fluid">
+            <hgroup>
+                <h1>Workflow Designer</h1>
+                <p>Drag and drop elements to design your workflow.</p>
+            </hgroup>
+            
+            <div class="dropzone">
+                <svg aria-hidden="true" class="mx-auto h-12 w-12 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+                <h3>Drag and drop elements here</h3>
+                <p>Start building your workflow by dragging elements from the left panel.</p>
+                <button>Create new workflow</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

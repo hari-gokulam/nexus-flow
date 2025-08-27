@@ -1,0 +1,133 @@
+{
+  "tenants": [
+    {
+      "tenantId": "tenant1",
+      "name": "Acme Corporation",
+      "description": "Tenant for Acme Corp"
+    },
+    {
+      "tenantId": "tenant2",
+      "name": "Beta Industries",
+      "description": "Tenant for Beta Industries"
+    }
+  ],
+
+  "users": [
+    {
+      "userId": "user1",
+      "username": "alice",
+      "email": "alice@acme.com",
+      "tenantIds": ["tenant1"],
+      "roles": [
+        { "tenantId": "tenant1", "roleName": "Approver" },
+        { "tenantId": "tenant1", "roleName": "Editor" }
+      ]
+    },
+    {
+      "userId": "user2",
+      "username": "bob",
+      "email": "bob@beta.com",
+      "tenantIds": ["tenant2"],
+      "roles": [
+        { "tenantId": "tenant2", "roleName": "Reviewer" }
+      ]
+    }
+  ],
+
+  "workflows": [
+    {
+      "workflowId": "wf1",
+      "tenantId": "tenant1",
+      "name": "Purchase Request Approval",
+      "description": "Workflow for approving purchase requests",
+      "states": [
+        {
+          "stateId": "s1",
+          "name": "Draft",
+          "description": "Initial request draft",
+          "properties": { "isInitial": true, "isFinal": false }
+        },
+        {
+          "stateId": "s2",
+          "name": "Pending Approval",
+          "description": "Waiting for approval",
+          "properties": { "isInitial": false, "isFinal": false }
+        },
+        {
+          "stateId": "s3",
+          "name": "Approved",
+          "description": "Request approved",
+          "properties": { "isInitial": false, "isFinal": true }
+        },
+        {
+          "stateId": "s4",
+          "name": "Rejected",
+          "description": "Request rejected",
+          "properties": { "isInitial": false, "isFinal": true }
+        }
+      ],
+      "transitions": [
+        {
+          "transitionId": "t1",
+          "name": "Submit for Approval",
+          "fromStateId": "s1",
+          "toStateId": "s2",
+          "allowedRoles": ["Editor"],
+          "conditions": { "expression": "" }
+        },
+        {
+          "transitionId": "t2",
+          "name": "Approve",
+          "fromStateId": "s2",
+          "toStateId": "s3",
+          "allowedRoles": ["Approver"],
+          "conditions": { "expression": "" }
+        },
+        {
+          "transitionId": "t3",
+          "name": "Reject",
+          "fromStateId": "s2",
+          "toStateId": "s4",
+          "allowedRoles": ["Approver"],
+          "conditions": { "expression": "" }
+        }
+      ],
+      "roles": [
+        {
+          "roleName": "Approver",
+          "description": "Can approve or reject requests",
+          "permissions": ["trigger-transition"]
+        },
+        {
+          "roleName": "Editor",
+          "description": "Can create and submit requests",
+          "permissions": ["trigger-transition", "edit-state"]
+        }
+      ]
+    }
+  ],
+
+  "workflowInstances": [
+    {
+      "instanceId": "inst1",
+      "workflowId": "wf1",
+      "tenantId": "tenant1",
+      "currentStateId": "s2",
+      "data": {
+        "requester": "alice",
+        "amount": 1200,
+        "description": "New monitor purchase"
+      },
+      "history": [
+        {
+          "transitionId": "t1",
+          "fromStateId": "s1",
+          "toStateId": "s2",
+          "triggeredByUserId": "user1",
+          "timestamp": "2025-08-20T08:30:00Z",
+          "comments": "Submitted request for approval"
+        }
+      ]
+    }
+  ]
+}

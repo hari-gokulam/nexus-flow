@@ -1,26 +1,34 @@
 <template>
-    <div class="home">
-        <h2>Home</h2>
+    <div class="container">
+       
+        <div class="content-wrapper">
+            <div class="content">
+                <h2 class="content-head is-center">Excepteur sint occaecat cupidatat.</h2>
+            </div>
+        </div>
     </div>
-    </template>
+</template>
 
 
 <script>
-export default {
-    name: 'HomeView',
-    components: {
-    },
-    data() {
-        return {
-        }
-    },
-    methods: {
-    },
-}
+    //import TopBar from '@/components/TopBar.vue';
+
+    export default {
+        name: 'HomeView',
+        components: {
+          
+        },
+        data() {
+            return {
+            }
+        },
+        methods: {
+        },
+    }
 </script>
 
 <style scoped>
-.home {
-    text-align: center;
-}
+    .home {
+        text-align: center;
+    }
 </style>

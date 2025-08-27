@@ -1,28 +1,16 @@
+:root {
+  /* Custom colors to match the original design */
+  --pico-font-family: "Be Vietnam Pro", sans-serif;
+  --pico-primary: #38e07b;
+  --pico-background-color: #f9fafb;
+  --pico-surface-color: #ffffff;
+  --pico-border-color: #e5e7eb;
+  --pico-color: #111827;
+  --pico-secondary-color: #6b7280;
+  --pico-font-size: 15px;
+}
+
 body {
-    background-color: lightslategray;
-}
-
-.top-bar {
-    background-color: #fff;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.top-bar-left {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-}
-
-.top-bar-right {
-    display: flex;
-    align-items: center;
-}
-
-.top-bar-right-item {
-    margin-left: 20px;
-    font-size: 20px;
-    color: #333;
+  /* background-color: rgb(229, 236, 243); */
+  color: var(--pico-color);
 }

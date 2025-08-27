@@ -1,6 +1,7 @@
 <template>
     <div class="workflow-designer">
         <h1>Workflow Designer</h1>
+        <TopBar @tenant-change="handleTenantChange" />
         <div class="header-controls">
             <TenantSelector :tenants="tenants" :selectedTenantId="tenantId" @tenant-change="handleTenantChange" />
             <WorkflowList :workflows="workflowList" @select-workflow="loadWorkflow" @delete-workflow="deleteWorkflow" />
@@ -40,153 +41,171 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps } from 'vue';
-import WorkflowList from './WorkflowList.vue';
-import StateForm from './StateForm.vue';
-import TransitionForm from './TransitionForm.vue';
-import RoleAssignmentForm from './RoleAssignmentForm.vue';
-import TenantSelector from './TenantSelector.vue';
+    import { ref, watch, defineProps, onMounted, watchEffect } from 'vue';
+    import WorkflowList from './WorkflowList.vue';
+    import StateForm from './StateForm.vue';
+    import TransitionForm from './TransitionForm.vue';
+    import RoleAssignmentForm from './RoleAssignmentForm.vue';
+    import TenantSelector from './TenantSelector.vue';
 
-const props = defineProps({
-    workflowList: {
-        type: Array,
-        default: () => []
-    },
-    tenantId: {
-        type: String,
-        required: true
-    }
-});
+    const props = defineProps({
+        workflowList: {
+            type: Array,
+            default: () => []
+        },
+        tenantId: {
+            type: String,
+            required: true
+        }
+    });
 
-const workflow = ref(null);
-const selectedStateId = ref(null);
-const selectedTransitionId = ref(null);
-const selectedRoleName = ref(null);
+    const workflow = ref(null);
+    const selectedStateId = ref(null);
+    const selectedTransitionId = ref(null);
+    const selectedRoleName = ref(null);
+    const tenants = ref([]);
 
-const findState = (id) => workflow.value.states.find(s => s.id === id);
-const findTransition = (id) => workflow.value.transitions.find(t => t.id === id);
+    const findState = (id) => workflow.value.states.find(s => s.id === id);
+    const findTransition = (id) => workflow.value.transitions.find(t => t.id === id);
 
-const loadWorkflow = (id) => {
-    // In a real app, this would fetch data from an API
-    const selectedWorkflow = props.workflowList.find(w => w.id === id);
-    if (selectedWorkflow) {
-        workflow.value = JSON.parse(JSON.stringify(selectedWorkflow)); // deep copy to avoid direct mutation
-        selectedStateId.value = null;
+    const loadWorkflow = (id) => {
+        if (id) {
+            if (props.workflowList.length > 0) {
+                console.log(props.workflowList);
+                console.log(`Loading workflow with ID: ${id}`);
+                // In a real app, this would fetch data from an API
+                const selectedWorkflow = props.workflowList.find(w => w.id === id);
+                if (selectedWorkflow) {
+                    workflow.value = JSON.parse(JSON.stringify(selectedWorkflow)); // deep copy to avoid direct mutation
+                    selectedStateId.value = null;
+                    selectedTransitionId.value = null;
+                }
+            }
+        }
+    };
+
+    const deleteWorkflow = (id) => {
+        // Logic to delete workflow, e.g., via API
+        console.log(`Deleting workflow with ID: ${id}`);
+        // Then update workflowList
+    };
+
+    const selectState = (id) => {
+        console.log(selectedRoleName);
+        selectedStateId.value = id;
         selectedTransitionId.value = null;
-    }
-};
+    };
 
-const deleteWorkflow = (id) => {
-    // Logic to delete workflow, e.g., via API
-    console.log(`Deleting workflow with ID: ${id}`);
-    // Then update workflowList
-};
+    const saveState = (updatedState) => {
+        const index = workflow.value.states.findIndex(s => s.id === updatedState.id);
+        if (index !== -1) {
+            Object.assign(workflow.value.states[index], updatedState);
+        } else {
+            // Add new state
+            workflow.value.states.push({ ...updatedState, id: `state-${Date.now()}` });
+        }
+    };
 
-const selectState = (id) => {
-    console.log(selectedRoleName);
-    selectedStateId.value = id;
-    selectedTransitionId.value = null;
-};
+    const deleteState = (stateId) => {
+        workflow.value.states = workflow.value.states.filter(s => s.id !== stateId);
+        selectedStateId.value = null;
+    };
 
-const saveState = (updatedState) => {
-    const index = workflow.value.states.findIndex(s => s.id === updatedState.id);
-    if (index !== -1) {
-        Object.assign(workflow.value.states[index], updatedState);
-    } else {
-        // Add new state
-        workflow.value.states.push({ ...updatedState, id: `state-${Date.now()}` });
-    }
-};
+    const saveTransition = (updatedTransition) => {
+        const index = workflow.value.transitions.findIndex(t => t.id === updatedTransition.id);
+        if (index !== -1) {
+            Object.assign(workflow.value.transitions[index], updatedTransition);
+        } else {
+            // Add new transition
+            workflow.value.transitions.push({ ...updatedTransition, id: `transition-${Date.now()}` });
+        }
+    };
 
-const deleteState = (stateId) => {
-    workflow.value.states = workflow.value.states.filter(s => s.id !== stateId);
-    selectedStateId.value = null;
-};
+    const deleteTransition = (transitionId) => {
+        workflow.value.transitions = workflow.value.transitions.filter(t => t.id !== transitionId);
+        selectedTransitionId.value = null;
+    };
 
-const saveTransition = (updatedTransition) => {
-    const index = workflow.value.transitions.findIndex(t => t.id === updatedTransition.id);
-    if (index !== -1) {
-        Object.assign(workflow.value.transitions[index], updatedTransition);
-    } else {
-        // Add new transition
-        workflow.value.transitions.push({ ...updatedTransition, id: `transition-${Date.now()}` });
-    }
-};
+    const addRole = (newRole) => {
+        if (!workflow.value.roles.find(r => r.name === newRole.name)) {
+            workflow.value.roles.push(newRole);
+        }
+    };
 
-const deleteTransition = (transitionId) => {
-    workflow.value.transitions = workflow.value.transitions.filter(t => t.id !== transitionId);
-    selectedTransitionId.value = null;
-};
+    const updateRole = (updatedRole) => {
+        const index = workflow.value.roles.findIndex(r => r.name === updatedRole.name);
+        if (index !== -1) {
+            Object.assign(workflow.value.roles[index], updatedRole);
+        }
+    };
 
-const addRole = (newRole) => {
-    if (!workflow.value.roles.find(r => r.name === newRole.name)) {
-        workflow.value.roles.push(newRole);
-    }
-};
+    const deleteRole = (roleName) => {
+        workflow.value.roles = workflow.value.roles.filter(r => r.name !== roleName);
+    };
 
-const updateRole = (updatedRole) => {
-    const index = workflow.value.roles.findIndex(r => r.name === updatedRole.name);
-    if (index !== -1) {
-        Object.assign(workflow.value.roles[index], updatedRole);
-    }
-};
+    const handleTenantChange = (newTenantId) => {
+        console.log(`Tenant changed to: ${newTenantId}`);
+        // In a real app, this would trigger a refetch of workflowList
+    };
 
-const deleteRole = (roleName) => {
-    workflow.value.roles = workflow.value.roles.filter(r => r.name !== roleName);
-};
+    watch(() => props.workflowList, (newList) => {
+        if (!workflow.value && newList.length > 0) {
+            loadWorkflow(newList[0].id); // Optionally load the first workflow on initial render
+        }
+    }, { immediate: true });
 
-const handleTenantChange = (newTenantId) => {
-    console.log(`Tenant changed to: ${newTenantId}`);
-    // In a real app, this would trigger a refetch of workflowList
-};
-
-watch(() => props.workflowList, (newList) => {
-    if (!workflow.value && newList.length > 0) {
-        loadWorkflow(newList[0].id); // Optionally load the first workflow on initial render
-    }
-}, { immediate: true });
+    const fetchTenants = async () => {
+        const response = await fetch('http://localhost:3000/tenants');
+        const tenants = await response.json();
+        console.log(tenants);
+        return tenants;
+    };
+    onMounted(async () => {
+        console.log('Workflows', props.workflowList);
+        tenants.value = await fetchTenants();
+    })
 </script>
 
 <style scoped>
-.workflow-designer {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
+    .workflow-designer {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
 
-.header-controls {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    background-color: #f0f0f0;
-}
+    .header-controls {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem;
+        background-color: #f0f0f0;
+    }
 
-.designer-area {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    flex-grow: 1;
-    gap: 1rem;
-    padding: 1rem;
-}
+    .designer-area {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        flex-grow: 1;
+        gap: 1rem;
+        padding: 1rem;
+    }
 
-.left-panel,
-.right-panel {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    overflow-y: auto;
-}
+    .left-panel,
+    .right-panel {
+        border: 1px solid #ccc;
+        padding: 1rem;
+        overflow-y: auto;
+    }
 
-.main-canvas {
-    border: 1px solid #ccc;
-    padding: 1rem;
-}
+    .main-canvas {
+        border: 1px solid #ccc;
+        padding: 1rem;
+    }
 
-.state-node {
-    border: 2px solid blue;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem;
-    display: inline-block;
-    cursor: pointer;
-}
+    .state-node {
+        border: 2px solid blue;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        margin: 0.5rem;
+        display: inline-block;
+        cursor: pointer;
+    }
 </style>

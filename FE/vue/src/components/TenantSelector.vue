@@ -10,18 +10,22 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+  import { defineProps, defineEmits, onMounted } from 'vue';
 
-const props = defineProps({
-  tenants: {
-    type: Array,
-    required: true
-  },
-  selectedTenantId: {
-    type: String,
-    required: true
-  }
-});
+  const props = defineProps({
+    tenants: {
+      type: Array,
+      required: true
+    },
+    selectedTenantId: {
+      type: String,
+      required: true
+    }
+  });
 
-const emit = defineEmits(['tenant-change']);
+  onMounted(() => {
+    console.log('TenantSelector mounted with tenants:', props.tenants);
+  });
+
+  const emit = defineEmits(['tenant-change']);
 </script>

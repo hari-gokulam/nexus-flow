@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&family=Be+Vietnam+Pro%3Awght%40400%3B500%3B700%3B900&family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    <title>Dashboard</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon">
+    <style>
+        /* Custom overrides for PicoCSS colors */
+        :root {
+            --pico-primary: #38e07b;
+            --pico-primary-hover: #2dbf68;
+            --pico-background-color: #f7fafc;
+            --pico-border-color: #e2e8f0;
+            --pico-card-background-color: #ffffff;
+            --pico-color: #4a5568;
+            --pico-color-h1: #111714;
+        }
+
+        /* Custom styles not supported by PicoCSS's semantic approach */
+        aside a.active {
+            background-color: var(--pico-primary);
+            color: #fff;
+        }
+        aside nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--pico-spacing);
+        }
+        aside nav span {
+            font-weight: bold;
+            font-size: 0.75rem; /* Equivalent to text-xs */
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .dashboard-header p {
+            font-size: 0.875rem; /* Equivalent to text-sm */
+            color: var(--pico-color);
+        }
+        .card h1 {
+            font-size: 2.25rem; /* Equivalent to text-4xl */
+            font-weight: bold;
+            color: var(--pico-color-h1);
+        }
+        .card p {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--pico-color);
+        }
+        .summary-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .summary-card h2 {
+            font-size: 1.125rem;
+        }
+        .summary-card p {
+            font-size: 0.875rem;
+        }
+        .summary-card button {
+            background-color: var(--pico-border-color);
+            color: var(--pico-color-h1);
+        }
+        .chart-container {
+            height: 12rem;
+        }
+        .bar-chart div {
+            flex: 1;
+            text-align: center;
+        }
+        .bar-chart .bar {
+            margin: auto;
+        }
+    </style>
+</head>
+<body style='font-family: "Be Vietnam Pro", "Noto Sans", sans-serif;'>
+    <div class="grid">
+        <aside class="w-24 border-right">
+            <a href="#" aria-label="Stitch">
+                <hgroup>
+                    <h1 style="color: var(--pico-primary-hover);">W</h1>
+                </hgroup>
+            </a>
+            <nav>
+                <a href="#" class="active">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">lan</span>
+                    <span>Workflows</span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">task_alt</span>
+                    <span>Tasks</span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">monitoring</span>
+                    <span>Reports</span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div style="margin-top: auto;">
+                <a href="#">
+                    <span class="material-symbols-outlined">notifications</span>
+                </a>
+                <a href="#">
+                    <img alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDz7tKtgDTiZk4FUHOmQ3zGsv6tueFscok0hEUF_se2Uoo6KI1_DPtntBzp7XIKS1s4NLFF8xInpI41LQhJ1tcuFrwNvD6Crt41L6h1kPAgToWuqQ5w7kPgbmBUfrw5HnRTQFjDgUlAhEX2mcEwmYSKQZEhMOPqQUfIjNMFLyR93HujHIuTKD10e58J7rsEmvndV69oipxf4uOsCdWnb38TnXZBD5-TNR1ONvFLZxeeURbY0O6CBApvotmC9YXFgj8jjTOfDbpMJuE" class="circle">
+                </a>
+            </div>
+        </aside>
+
+        <main class="container">
+            <header class="dashboard-header">
+                <hgroup>
+                    <h1>Dashboard</h1>
+                    <p>Overview of active and pending workflows</p>
+                </hgroup>
+            </header>
+            
+            <section class="grid">
+                <article>
+                    <p>Active Workflows</p>
+                    <h1>125</h1>
+                </article>
+                <article>
+                    <p>Pending Tasks</p>
+                    <h1>78</h1>
+                </article>
+                <article>
+                    <p>Completed Workflows</p>
+                    <h1>342</h1>
+                </article>
+            </section>
+            
+            <section>
+                <h2>Workflow Summary</h2>
+                <div class="grid">
+                    <article class="summary-card">
+                        <div>
+                            <hgroup>
+                                <h2>Active Workflows</h2>
+                                <p>Currently running workflows</p>
+                            </hgroup>
+                            <a href="#" role="button" class="outline">View All</a>
+                        </div>
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL6KjfqVlbF2OaiRPH7Jqd9fU6PA_pVHiGQ7oY89U8IKRKyI1uSeayuYxYcWfjpr5UnbtOnxeI4FEg_iW_sWaEGUq4s7iq-2qu8FkvCcvYlUrHzc6P_s1mC68uNh8QWzfOzMQn5dZa0AncDMbWg9iPm8WfBtDgFbLkpyrB4PWxMSKu5KqXqV6C7ZIlHGbnKcK9cWtCh8Z7XQApHXAUzTHbMTu-e0u_MDrqnQ7i43ZWvs2jn3kDbclEpkvWIE8EHOcC5yHZ_xTxOTI" alt="Workflow chart">
+                    </article>
+                    <article class="summary-card">
+                        <div>
+                            <hgroup>
+                                <h2>Pending Tasks</h2>
+                                <p>Tasks awaiting completion</p>
+                            </hgroup>
+                            <a href="#" role="button" class="outline">View Tasks</a>
+                        </div>
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDySODqrFeRMi9k_3lqbEGhIpD1PjRfJOlD1MUx_OFNRBwB8ospjc-qYe9mxSbH6O4hM_h9qWBpFaJNqeWQhXD6vptKgwTE3RaHvrQJlBbzxnIMpSkp1jXj4BR7NUvlGZwqOdgYRtX-gRV-cMF3s7a5k57UH99So7l_Vdt2av_j4i6aVWOD7VM2g6_lLQW30s4CQ0wO27A0apjqXFB_zNL1rhye3JiHPuqww7LGnRf3-e8VkT3VBm0Qc217keqwh8RWn0q-P21co3A" alt="Tasks chart">
+                    </article>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Key Metrics</h2>
+                <div class="grid">
+                    <article>
+                        <p>Workflow Completion Rate</p>
+                        <div class="grid">
+                            <h1>85%</h1>
+                            <span class="secondary">+5%</span>
+                        </div>
+                        <p>Last 30 Days</p>
+                        <div class="chart-container">
+                            <svg fill="none" height="100%" preserveAspectRatio="none" viewBox="0 0 472 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="var(--pico-primary)" stroke-linecap="round" stroke-width="3"></path>
+                            </svg>
+                        </div>
+                    </article>
+                    <article>
+                        <p>Task Completion Rate</p>
+                        <div class="grid">
+                            <h1>72%</h1>
+                            <span class="secondary">-2%</span>
+                        </div>
+                        <p>Last 30 Days</p>
+                        <div class="bar-chart chart-container grid">
+                            <div style="height: 20%; background-color: var(--pico-border-color);" class="bar"></div>
+                            <div style="height: 50%; background-color: var(--pico-border-color);" class="bar"></div>
+                            <div style="height: 90%; background-color: var(--pico-border-color);" class="bar"></div>
+                            <div style="height: 10%; background-color: var(--pico-border-color);" class="bar"></div>
+                            <div style="height: 70%; background-color: var(--pico-border-color);" class="bar"></div>
+                            <div style="height: 72%; background-color: var(--pico-primary);" class="bar"></div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Quick Actions</h2>
+                <div class="grid">
+                    <a href="#" role="button">Start New Workflow</a>
+                    <a href="#" role="button" class="outline">Create New Task</a>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
